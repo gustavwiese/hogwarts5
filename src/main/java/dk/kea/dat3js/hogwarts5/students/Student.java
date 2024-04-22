@@ -45,7 +45,7 @@ public class Student {
   }
 
   public void setFirstName(String firstName) {
-    this.firstName = firstName;
+    this.firstName = capitalize(firstName);
   }
 
   public String getMiddleName() {
@@ -53,7 +53,7 @@ public class Student {
   }
 
   public void setMiddleName(String middleName) {
-    this.middleName = middleName;
+    this.middleName = capitalize(middleName);
   }
 
   public String getLastName() {
@@ -61,7 +61,7 @@ public class Student {
   }
 
   public void setLastName(String lastName) {
-    this.lastName = lastName;
+    this.lastName = capitalize(lastName);
   }
 
   public House getHouse() {
@@ -124,4 +124,17 @@ public class Student {
       }
     }
   }
+
+  public String capitalize(String name) {
+    if (name == null || name.trim().isEmpty()) {
+      return "";
+    } else {
+      String[] words = name.split(" ");
+      for (int i = 0; i < words.length; i++) {
+        words[i] = words[i].substring(0, 1).toUpperCase() + words[i].substring(1).toLowerCase();
+      }
+      return String.join(" ", words);
+    }
+  }
+
 }
