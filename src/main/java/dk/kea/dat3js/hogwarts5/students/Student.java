@@ -1,12 +1,13 @@
 package dk.kea.dat3js.hogwarts5.students;
 
+import dk.kea.dat3js.hogwarts5.common.PersonWithNames;
 import dk.kea.dat3js.hogwarts5.house.House;
 import jakarta.persistence.*;
 
 import java.util.Objects;
 
 @Entity
-public class Student {
+public class Student implements PersonWithNames {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
@@ -92,49 +93,4 @@ public class Student {
   public int hashCode() {
     return Objects.hash(getFirstName(), getMiddleName(), getLastName(), getHouse().getName());
   }
-
-
-  public String getFullName() {
-    return firstName + " " + (middleName != null ? middleName + " " : "") + lastName;
-  }
-
-  public void setFullName(String fullName) {
-    if (fullName == null) {
-      return;
-    } else if (fullName.isEmpty()) {
-      setFirstName("");
-      setMiddleName("");
-      setLastName("");
-    } else {
-      int firstSpace = fullName.indexOf(' ');
-      int lastSpace = fullName.lastIndexOf(' ');
-
-      if (firstSpace == -1) { // No spaces, only one word
-        setFirstName(fullName);
-        setMiddleName("");
-        // Keep lastName as it is
-      } else if (firstSpace == lastSpace) { // One space, two words
-        setFirstName(fullName.substring(0, firstSpace));
-        setMiddleName(fullName.substring(firstSpace + 1));
-        // Keep lastName as it is
-      } else { // Two spaces, three words
-        setFirstName(fullName.substring(0, firstSpace));
-        setMiddleName(fullName.substring(firstSpace + 1, lastSpace));
-        setLastName(fullName.substring(lastSpace + 1));
-      }
-    }
-  }
-
-  public String capitalize(String name) {
-    if (name == null || name.trim().isEmpty()) {
-      return "";
-    } else {
-      String[] words = name.split(" ");
-      for (int i = 0; i < words.length; i++) {
-        words[i] = words[i].substring(0, 1).toUpperCase() + words[i].substring(1).toLowerCase();
-      }
-      return String.join(" ", words);
-    }
-  }
-
 }
